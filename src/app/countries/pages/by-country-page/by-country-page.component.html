@@ -1,0 +1,19 @@
+<h2>Por nombre de pais</h2>
+<hr />
+
+<div class="row">
+  <div class="col">
+    <app-search-box
+      [placeholder]="'Buscar por nombre de pais'"
+      (onValue)="searchByCountry($event)"
+    ></app-search-box>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <hr />
+
+    <app-country-table [countries]="countries"></app-country-table>
+  </div>
+</div>

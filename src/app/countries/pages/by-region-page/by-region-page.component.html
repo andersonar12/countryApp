@@ -1,0 +1,19 @@
+<h2>Por region</h2>
+<hr />
+
+<div class="row">
+  <div class="col">
+    <app-search-box
+      [placeholder]="'Buscar por region'"
+      (onValue)="searchByRegion($event)"
+    ></app-search-box>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <hr />
+
+    <app-country-table [countries]="countries"></app-country-table>
+  </div>
+</div>
