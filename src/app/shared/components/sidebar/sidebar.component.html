@@ -8,6 +8,7 @@
       [routerLinkActiveOptions]="{ exact: true }"
       routerLinkActive="active"
       *ngFor="let link of links"
+      (click)="setCountriesByKey(link.keyDat)"
     >
       {{ link.name }}
     </li>

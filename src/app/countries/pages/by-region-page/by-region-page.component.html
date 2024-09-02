@@ -2,11 +2,15 @@
 <hr />
 
 <div class="row">
-  <div class="col">
-    <app-search-box
-      [placeholder]="'Buscar por region'"
-      (onValue)="searchByRegion($event)"
-    ></app-search-box>
+  <div class="col text-center">
+    <button
+      *ngFor="let region of regions"
+      class="btn mx-1 btn-outline-primary"
+      [ngClass]="{ active: region === selectedRegion }"
+      (click)="searchByRegion(region)"
+    >
+      {{ region }}
+    </button>
   </div>
 </div>
 
@@ -14,6 +18,6 @@
   <div class="col">
     <hr />
 
-    <app-country-table [countries]="countries"></app-country-table>
+    <app-country-table></app-country-table>
   </div>
 </div>

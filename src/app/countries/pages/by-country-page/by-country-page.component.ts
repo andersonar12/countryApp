@@ -13,13 +13,13 @@ import { SearchBoxComponent } from '../../components/search-box/search-box.compo
   styleUrl: './by-country-page.component.css',
 })
 export class ByCountryPageComponent implements OnInit {
-  public countries: Country[] = [];
-
-  constructor(public CountriesService: CountriesService) {}
-  ngOnInit(): void {}
+  constructor(public countriesService: CountriesService) {}
+  ngOnInit(): void {
+    this.countriesService.key = 'by-name';
+  }
   searchByCountry(term: string) {
-    this.CountriesService.getCountriesByName(term).subscribe((countries) => {
-      this.countries = countries as Country[];
+    this.countriesService.getCountriesByName(term).subscribe((countries) => {
+      this.countriesService.countries['by-name'] = countries as Country[];
     });
   }
 }

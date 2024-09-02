@@ -1,15 +1,35 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Country } from '../interfaces/country';
-import { catchError, map, of } from 'rxjs';
+import { catchError, delay, map, of } from 'rxjs';
 
+interface DataStore {
+  'by-capital': Country[];
+  'by-name': Country[];
+  'by-region': Country[];
+}
+
+export type keys = 'by-capital' | 'by-name' | 'by-region';
 @Injectable({
   providedIn: 'root',
 })
 export class CountriesService {
   public baseUrl = 'https://restcountries.com/v3.1';
 
+  // public countries: Country[] = [];
+
+  public key = 'by-capital';
+  public countries: DataStore = {
+    'by-capital': [],
+    'by-name': [],
+    'by-region': [],
+  };
+
   constructor(private http: HttpClient) {}
+
+  public getCountries() {
+    return this.countries[this.key as keyof DataStore];
+  }
 
   public getCountriesByCapital(term: string) {
     let url = `${this.baseUrl}/capital/${term}`;

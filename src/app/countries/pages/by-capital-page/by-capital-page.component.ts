@@ -5,6 +5,7 @@ import { CountriesService } from '../../services/countries.service';
 import { HttpClientModule } from '@angular/common/http';
 import { Country } from '../../interfaces/country';
 import { CountryTableComponent } from '../../components/country-table/country-table.component';
+import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-by-capital-page',
@@ -14,19 +15,29 @@ import { CountryTableComponent } from '../../components/country-table/country-ta
     SearchBoxComponent,
     HttpClientModule,
     CountryTableComponent,
+    LoadingSpinnerComponent,
   ],
   templateUrl: './by-capital-page.component.html',
   styleUrl: './by-capital-page.component.css',
 })
 export class ByCapitalPageComponent implements OnInit {
-  public countries: Country[] = [];
+  public isLoading: boolean = false;
 
   constructor(public countriesService: CountriesService) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.countriesService.key = 'by-capital';
+  }
 
   searchByCapital(term: string) {
-    this.countriesService.getCountriesByCapital(term).subscribe((countries) => {
-      this.countries = countries as Country[];
+    this.isLoading = true;
+    this.countriesService.getCountriesByCapital(term).subscribe({
+      next: (countries) => {
+        this.countriesService.countries['by-capital'] = countries as Country[];
+      },
+      error: () => {},
+      complete: () => {
+        this.isLoading = false;
+      },
     });
   }
 }

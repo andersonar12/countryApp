@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, type OnInit } from '@angular/core';
 import { Country } from '../../interfaces/country';
 import { RouterLink } from '@angular/router';
+import { CountriesService } from '../../services/countries.service';
 
 @Component({
   selector: 'app-country-table',
@@ -11,7 +12,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './country-table.component.css',
 })
 export class CountryTableComponent implements OnInit {
-  @Input() countries: Country[] = [];
+  constructor(public countriesService: CountriesService) {}
 
   ngOnInit(): void {}
 }

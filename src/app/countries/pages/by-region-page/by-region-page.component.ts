@@ -5,6 +5,7 @@ import { Country } from '../../interfaces/country';
 import { SearchBoxComponent } from '../../components/search-box/search-box.component';
 import { CountryTableComponent } from '../../components/country-table/country-table.component';
 
+type Region = 'Africa' | 'Americas' | 'Asia' | 'Europe' | 'Oceania';
 @Component({
   selector: 'app-by-region-page',
   standalone: true,
@@ -13,12 +14,22 @@ import { CountryTableComponent } from '../../components/country-table/country-ta
   styleUrl: './by-region-page.component.css',
 })
 export class ByRegionPageComponent implements OnInit {
-  public countries: Country[] = [];
-  constructor(public CountriesService: CountriesService) {}
-  ngOnInit(): void {}
-  searchByRegion(term: string) {
-    this.CountriesService.getCountriesByRegion(term).subscribe((countries) => {
-      this.countries = countries as Country[];
+  public regions: Region[] = [
+    'Africa',
+    'Americas',
+    'Asia',
+    'Europe',
+    'Oceania',
+  ];
+  public selectedRegion?: Region;
+  constructor(public countriesService: CountriesService) {}
+  ngOnInit(): void {
+    this.countriesService.key = 'by-region';
+  }
+  searchByRegion(term: Region) {
+    this.selectedRegion = term;
+    this.countriesService.getCountriesByRegion(term).subscribe((countries) => {
+      this.countriesService.countries['by-region'] = countries as Country[];
     });
   }
 }
